@@ -43,21 +43,11 @@ export default function Map({
     });
 
     map.on('load', () => {
-      try {
-        const featuresWithCoordinates = geojson.features.filter(d => {
-          const { coordinates } = d.geometry;
-          if (coordinates.includes(null)) return false;
-          return true;
-        });
-        const centerPoint = center({
-          type: 'FeatureCollection',
-          features: featuresWithCoordinates,
-        });
+      if (geojson.features.length > 0) {
+        const centerPoint = center(geojson);
         const centerCoordinates = centerPoint.geometry.coordinates;
         map.setCenter(centerCoordinates);
         map.setZoom(4);
-      } catch (e) {
-        console.error('Problem centering map', e);
       }
 
       setMap(map);

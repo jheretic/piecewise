@@ -7,8 +7,12 @@ const creationSchema = Joi.array()
       c2sRate: Joi.number().required(),
       s2cRate: Joi.number().required(),
       MinRTT: Joi.number().required(),
+      MaxRTT: Joi.number().required(),
       latitude: Joi.number(),
       longitude: Joi.number(),
+      address: Joi.string(),
+      ClientIP: Joi.string(),
+      FullResults: Joi.string(),
       fields: Joi.array()
         .required()
         .min(1),
@@ -22,8 +26,12 @@ const updateSchema = Joi.array()
       c2sRate: Joi.number().required(),
       s2cRate: Joi.number().required(),
       MinRTT: Joi.number().required(),
+      MaxRTT: Joi.number().required(),
       latitude: Joi.number(),
       longitude: Joi.number(),
+      address: Joi.string(),
+      ClientIP: Joi.string(),
+      FullResults: Joi.string(),
       fields: Joi.array()
         .required()
         .min(1),

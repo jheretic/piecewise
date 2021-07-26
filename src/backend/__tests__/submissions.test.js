@@ -8,8 +8,12 @@ const validSubmission = {
   c2sRate: 10.0,
   s2cRate: 20.0,
   MinRTT: 10,
+  MaxRTT: 10,
   latitude: 38.889248,
   longitude: -77.050636,
+  address: '1 Marietta Atlanta Georgia',
+  ClientIP: '192.168.0.1',
+  FullResults: 'test',
   fields: [{ test: 'Test!' }],
 };
 
@@ -17,8 +21,12 @@ const invalidSubmission = {
   c2sRate: 'baz',
   s2cRate: null,
   MinRTT: {},
+  MaxRTT: {},
   latitude: 'foo',
   longitude: 'bar',
+  address: 0,
+  ClientIP: 0,
+  FullResults: 0,
   fields: 0,
 };
 

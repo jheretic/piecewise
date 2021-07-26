@@ -10,8 +10,12 @@ export function up(knex) {
       table.decimal('c2sRate');
       table.decimal('s2cRate');
       table.decimal('MinRTT');
+      table.decimal('MaxRTT');
       table.decimal('latitude');
       table.decimal('longitude');
+      table.string('address', 255);
+      table.string('ClientIP', 255);
+      table.string('FullResults', 2048);
       table.json('fields');
       table.timestamps(true, true);
     })

@@ -98,8 +98,12 @@ export default function controller(submissions, thisUser) {
           columns.add('c2sRate');
           columns.add('s2cRate');
           columns.add('MinRTT');
+          columns.add('MaxRTT');
           columns.add('latitude');
           columns.add('longitude');
+          columns.add('address');
+          columns.add('ClientIP');
+          columns.add('FullResults');
           columns.add('form_id');
           const flat = res.map(row => {
             const survey = {};
@@ -120,8 +124,12 @@ export default function controller(submissions, thisUser) {
               c2sRate: row.c2sRate,
               s2cRate: row.s2cRate,
               MinRTT: row.MinRTT,
+              MaxRTT: row.MaxRTT,
               latitude: row.latitude,
               longitude: row.longitude,
+              address: row.address,
+              ClientIP: row.ClientIP,
+              FullResults: row.FullResults,
               form_id: row.form_id,
               ...survey,
             };

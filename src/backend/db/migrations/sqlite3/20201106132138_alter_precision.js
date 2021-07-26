@@ -8,8 +8,12 @@ export async function up(knex) {
     table.decimal('c2sRate', null);
     table.decimal('s2cRate', null);
     table.decimal('MinRTT', null);
+    table.decimal('MaxRTT', null);
     table.decimal('latitude', null);
     table.decimal('longitude', null);
+    table.string('address', null);
+    table.string('ClientIP', null);
+    table.string('FullResults', null);
     table.json('fields');
     table.timestamps(true, true);
   });
@@ -27,8 +31,12 @@ export async function down(knex) {
     table.decimal('c2sRate');
     table.decimal('s2cRate');
     table.decimal('MinRTT');
+    table.decimal('MaxRTT');
     table.decimal('latitude');
     table.decimal('longitude');
+    table.string('address', null);
+    table.string('ClientIP', null);
+    table.string('FullResults', null);
     table.json('fields');
     table.timestamps(true, true);
   });

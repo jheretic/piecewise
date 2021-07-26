@@ -10,8 +10,12 @@ export function seed(knex) {
             c2sRate: 10.12345,
             s2cRate: 20.54321,
             MinRTT: 9,
+            MaxRTT: 9,
             latitude: 38.889248,
             longitude: -77.050636,
+            address: '1 Marietta Atlanta GA',
+            ClientIP: '192.168.0.1',
+            FullResults: 'test',
             fields: JSON.stringify([
               {
                 name: 'text_input_A0FD4103-DBEA-405F-BC18-B5B3C2EC93C2',
@@ -32,8 +36,12 @@ export function seed(knex) {
             c2sRate: 10.12345,
             s2cRate: 20.54321,
             MinRTT: 9,
+            MaxRTT: 9,
             latitude: 38.889248,
             longitude: -77.050636,
+            address: '1 Marietta Atlanta GA',
+            ClientIP: '192.168.0.1',
+            FullResults: 'test',
             fields: JSON.stringify([
               {
                 name: 'text_input_A0FD4103-DBEA-405F-BC18-B5B3C2EC93C2',
@@ -54,8 +62,12 @@ export function seed(knex) {
             c2sRate: 10.12345,
             s2cRate: 20.54321,
             MinRTT: 9,
+            MaxRTT: 9,
             latitude: 38.889248,
             longitude: -77.050636,
+            address: '1 Marietta Atlanta GA',
+            ClientIP: '192.168.0.1',
+            FullResults: 'test',
             fields: JSON.stringify([
               {
                 name: 'text_input_A0FD4103-DBEA-405F-BC18-B5B3C2EC93C2',
@@ -76,8 +88,12 @@ export function seed(knex) {
             c2sRate: 10.12345,
             s2cRate: 20.54321,
             MinRTT: 9,
+            MaxRTT: 9,
             latitude: 38.889248,
             longitude: -77.050636,
+            address: '1 Marietta Atlanta GA',
+            ClientIP: '192.168.0.1',
+            FullResults: 'test',
             fields: JSON.stringify([
               {
                 name: 'text_input_A0FD4103-DBEA-405F-BC18-B5B3C2EC93C2',

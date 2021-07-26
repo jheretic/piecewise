@@ -15,6 +15,9 @@ import NdtWidget from './utils/NdtWidget.jsx';
 export default function Survey(props) {
   const settings = props.location.state.settings;
   const locationConsent = props.location.state.locationConsent;
+  const latitude = props.location.state.latitude;
+  const longitude = props.location.state.longitude;
+  const address = props.location.state.address;
   const [form, setForm] = React.useState(null);
   const [formId, setFormId] = React.useState();
   const [location, setLocation] = React.useState({});
@@ -51,8 +54,12 @@ export default function Survey(props) {
           c2sRate: results.c2sRate,
           s2cRate: results.s2cRate,
           MinRTT: results.MinRTT,
-          latitude: location.latitude,
-          longitude: location.longitude,
+          MaxRTT: results.MaxRTT,
+          latitude: latitude,
+          longitude: longitude,
+          address: address,
+          ClientIP: results.ClientIP,
+          FullResults: JSON.stringify(results),
           fields: formData,
         },
       }),
@@ -192,6 +199,8 @@ Survey.propTypes = {
     state: PropTypes.shape({
       settings: PropTypes.object.isRequired,
       locationConsent: PropTypes.bool.isRequired,
+      latitude: PropTypes.string.isRequired,
+      longitude: PropTypes.string.isRequired,
     }),
   }),
 };

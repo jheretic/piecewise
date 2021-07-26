@@ -7,16 +7,16 @@ import PropTypes from 'prop-types';
 
 // bootstrap imports
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
+// import Card from 'react-bootstrap/Card';
+// import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+// import Row from 'react-bootstrap/Row';
 
 // module imports
 import Loading from './Loading.jsx';
-import ChromeScreengrab from '../assets/images/chrome-location.jpg';
-import FirefoxScreengrab from '../assets/images/firefox-location.jpg';
+// import ChromeScreengrab from '../assets/images/chrome-location.jpg';
+// import FirefoxScreengrab from '../assets/images/firefox-location.jpg';
 import defaultLogo from '../../common/assets/favicon.ico';
 
 export default function Basic() {
@@ -82,7 +82,7 @@ export default function Basic() {
   };
 
   // handle geolocation consent
-  const [locationConsent, setLocationConsent] = useState(true);
+  const [locationConsent, setLocationConsent] = useState(false);
   // site settings
   const [settings, setSettings] = useState({});
 
@@ -145,7 +145,7 @@ export default function Basic() {
   const handleSubmit = event => {
     event.preventDefault();
     history.push({
-      pathname: '/survey',
+      pathname: '/geocoder',
       state: { settings: settings, locationConsent: locationConsent },
     });
   };
@@ -160,7 +160,7 @@ export default function Basic() {
         </div>
         <h1 {...primary}>{settings.title}</h1>
         <div>{parse(`<div>${settings.header}</div>`)}</div>
-        <h2 {...primary}>Sharing your location</h2>
+        {/* <h2 {...primary}>Sharing your location</h2>
         <p>
           To get the most accurate location data, we ask you to allow your
           browser to share your location. This is not essential but it is very
@@ -193,28 +193,8 @@ export default function Basic() {
               </Card.Text>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
         <Form onSubmit={handleSubmit}>
-          <fieldset>
-            <Form.Group>
-              <Form.Label>Do you want to use your browser location?</Form.Label>
-              <Form.Check
-                type="radio"
-                name="location"
-                id="location-yes"
-                label="Use my browser location"
-                onChange={() => setLocationConsent(true)}
-                defaultChecked
-              />
-              <Form.Check
-                type="radio"
-                name="location"
-                id="location-no"
-                label="Do not use my location"
-                onChange={() => setLocationConsent(false)}
-              />
-            </Form.Group>
-          </fieldset>
           <Form.Group {...location}>
             <Form.Check.Input required type="checkbox" id="consent" />
             <Form.Check.Label>
@@ -222,13 +202,16 @@ export default function Basic() {
               <a href="https://www.measurementlab.net/privacy/">
                 M-Lab privacy policy
               </a>
-              , which includes retention and publication of IP addresses, in
-              addition to speed test results.
+              &nbsp;and the&nbsp;
+              <a href="https://broadbandcatalysts.com/privacy.html#privacy">
+                Broadband Catalysts privacy policy
+              </a>
+              , both of which include retention and publication of IP addresses and speed test results.
             </Form.Check.Label>
             <Form.Text>This field is required</Form.Text>
           </Form.Group>
           <Button variant="primary" type="submit" {...secondary}>
-            Take the Test
+            Take the Survey
           </Button>
         </Form>
       </Container>

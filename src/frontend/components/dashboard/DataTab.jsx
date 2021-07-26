@@ -15,9 +15,12 @@ const headers = [
   { label: 'Date', key: 'date' },
   { label: 'Download Speed', key: 'c2sRate' },
   { label: 'Upload Speed', key: 's2cRate' },
-  { label: 'Latency', key: 'MinRTT' },
+  { label: 'Minimum Latency', key: 'MinRTT' },
+  { label: 'Maximum Latency', key: 'MaxRTT' },
   { label: 'Latitude', key: 'latitude' },
   { label: 'Longitude', key: 'longitude' },
+  { label: 'Address', key: 'address' },
+  { label: 'IP Address', key: 'ClientIP' },
 ];
 
 export default function DataTab() {
@@ -97,8 +100,11 @@ export default function DataTab() {
                   <td>{submission.s2cRate}</td>
                   <td>{submission.c2sRate}</td>
                   <td>{submission.MinRTT}</td>
+                  <td>{submission.MaxRTT}</td>
                   <td>{submission.latitude}</td>
                   <td>{submission.longitude}</td>
+                  <td>{submission.address}</td>
+                  <td>{submission.ClientIP}</td>
                 </tr>
               ))}
             </tbody>

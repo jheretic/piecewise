@@ -42,7 +42,8 @@ export default function ThankYou(props) {
             Mb/s
           </div>
           <div>
-            <strong>Latency:</strong> {results.MinRTT} ms
+            <strong>Average Latency:</strong>{' '}
+            {results.MinRTT / 2 + results.MaxRTT / 2} ms
           </div>
         </Col>
       </Row>
