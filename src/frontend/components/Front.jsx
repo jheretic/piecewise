@@ -206,7 +206,8 @@ export default function Basic() {
               <a href="https://broadbandcatalysts.com/privacy.html#privacy">
                 Broadband Catalysts privacy policy
               </a>
-              , both of which include retention and publication of IP addresses and speed test results.
+              , both of which include retention and publication of IP addresses
+              and speed test results.
             </Form.Check.Label>
             <Form.Text>This field is required</Form.Text>
           </Form.Group>
