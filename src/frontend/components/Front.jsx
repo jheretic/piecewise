@@ -19,7 +19,7 @@ import Loading from './Loading.jsx';
 // import FirefoxScreengrab from '../assets/images/firefox-location.jpg';
 import defaultLogo from '../../common/assets/favicon.ico';
 
-export default function Basic() {
+export default function Basic({ sessionId, surveyId }) {
   const history = useHistory();
   /* eslint-disable no-unused-vars */
   const [favicon, setFavicon] = useState(
@@ -146,7 +146,12 @@ export default function Basic() {
     event.preventDefault();
     history.push({
       pathname: '/geocoder',
-      state: { settings: settings, locationConsent: locationConsent },
+      state: {
+        settings: settings,
+        locationConsent: locationConsent,
+        surveyId: surveyId,
+        sessionId: sessionId,
+      },
     });
   };
 

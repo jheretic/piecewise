@@ -56,6 +56,8 @@ export default function configServer(config) {
     settingsModel,
     authz,
     config.mapboxKey,
+    config.qualtricsApiToken,
+    config.qualtricsEnv,
   );
   const subModel = new Submissions(db);
   const submissions = new SubController(subModel, authz);

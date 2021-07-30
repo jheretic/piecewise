@@ -41,6 +41,10 @@ const defaults = {
     client_secret: process.env.PIECEWISE_OAUTH_CLIENT_SECRET,
     callback_url: process.env.PIECEWISE_OAUTH_CALLBACK_URL,
   },
+  qualtrics: {
+    api_token: process.env.PIECEWISE_QUALTRICS_API_TOKEN,
+    env: process.env.PIECEWISE_QUALTRICS_ENV,
+  },
   server: {
     port: process.env.PIECEWISE_PORT || '3000',
   },
@@ -340,6 +344,18 @@ export default program
     'Google Maps API key',
     validateToken,
     defaults.google.key,
+  )
+  .option(
+    '--qualtrics-api-token <token>',
+    'Qualtrics API token',
+    validateToken,
+    defaults.qualtrics.api_token,
+  )
+  .option(
+    '--qualtrics-env <env>',
+    'Qualtrics server location',
+    validateToken,
+    defaults.qualtrics.env,
   )
   .option(
     '--mapbox-key <key>',

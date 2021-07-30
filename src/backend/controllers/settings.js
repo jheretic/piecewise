@@ -5,7 +5,13 @@ import { getLogger } from '../log.js';
 
 const log = getLogger('backend:controllers:setting');
 
-export default function controller(settings, thisUser, mapboxKey) {
+export default function controller(
+  settings,
+  thisUser,
+  mapboxKey,
+  qualtricsApiToken,
+  qualtricsEnv,
+) {
   const router = new Router();
 
   router.get('/settings', async ctx => {
@@ -16,6 +22,12 @@ export default function controller(settings, thisUser, mapboxKey) {
       if (!_.isEmpty(setting)) {
         if (mapboxKey) {
           setting.mapboxKey = mapboxKey;
+        }
+        if (qualtricsApiToken) {
+          setting.qualtricsApiToken = qualtricsApiToken;
+        }
+        if (qualtricsEnv) {
+          setting.qualtricsEnv = qualtricsEnv;
         }
         if (Buffer.isBuffer(setting.logo)) {
           setting.logo = setting.logo.toString();

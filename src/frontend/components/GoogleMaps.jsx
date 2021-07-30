@@ -10,7 +10,12 @@ import toastr from 'toastr';
 import Container from 'react-bootstrap/Container';
 
 export default function GoogleMaps(props) {
-  const { settings, locationConsent } = props.location.state;
+  const {
+    settings,
+    locationConsent,
+    sessionId,
+    surveyId,
+  } = props.location.state;
   const [latitude, setLatitude] = React.useState('');
   const [longitude, setLongitude] = React.useState('');
   const [address, setAddress] = React.useState('');
@@ -144,18 +149,36 @@ export default function GoogleMaps(props) {
     });
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    history.push({
-      pathname: '/survey',
-      state: {
-        settings: settings,
-        locationConsent: locationConsent,
-        latitude: latitude,
-        longitude: longitude,
-        address: address,
-      },
-    });
+    if (
+      settings.qualtricsEnv &&
+      settings.qualtricsApiToken &&
+      sessionId &&
+      surveyId
+    ) {
+      history.push({
+        pathname: '/test',
+        state: {
+          settings: settings,
+          locationConsent: locationConsent,
+          latitude: latitude,
+          longitude: longitude,
+          address: address,
+        },
+      });
+    } else {
+      history.push({
+        pathname: '/survey',
+        state: {
+          settings: settings,
+          locationConsent: locationConsent,
+          latitude: latitude,
+          longitude: longitude,
+          address: address,
+        },
+      });
+    }
   };
 
   return (
@@ -208,6 +231,8 @@ GoogleMaps.propTypes = {
     state: PropTypes.shape({
       settings: PropTypes.object.isRequired,
       locationConsent: PropTypes.bool.isRequired,
+      surveyId: PropTypes.string.isRequired,
+      sessionId: PropTypes.string.isRequired,
     }),
   }),
 };
