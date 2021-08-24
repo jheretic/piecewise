@@ -46,7 +46,7 @@ const defaults = {
     env: process.env.PIECEWISE_QUALTRICS_ENV,
   },
   server: {
-    port: process.env.PIECEWISE_PORT || '3000',
+    port: process.env.PORT || process.env.PIECEWISE_PORT || '3000',
   },
   viewer: {
     user: process.env.PIECEWISE_VIEWER_USERNAME || 'viewer',
