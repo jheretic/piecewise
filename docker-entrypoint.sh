@@ -2,13 +2,11 @@
 
 TRIES=30
 DELAY=4
-HOST="$PIECEWISE_DB_HOST"
-PORT="$PIECEWISE_DB_PORT"
 
 wait_for() {
-  echo "Waiting for service => HOST: $HOST, PORT: $PORT"
+  echo "Waiting for service => HOST: $PIECEWISE_DB_HOST, PORT: $PIECEWISE_DB_PORT"
   for i in $(seq $TRIES); do
-    nc -z "$HOST" "$PORT" >/dev/null 2>&1
+    nc -z "$PIECEWISE_DB_HOST" "$PIECEWISE_DB_PORT" >/dev/null 2>&1
 
     result=$?
     if [ $result -eq 0 ]; then
