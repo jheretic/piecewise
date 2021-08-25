@@ -110,6 +110,8 @@ export default function configServer(config) {
     log.warn('Disable proxy header support.');
   }
 
+  log.debug(`***config.dbUrl***: ${config.dbUrl}`);
+
   server
     .use(bodyParser({ multipart: true, json: true }))
     .use(session(server))
