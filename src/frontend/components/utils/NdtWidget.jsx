@@ -91,7 +91,7 @@ function runNdt({
 
 export default function NdtWidget(props) {
   // handle NDT test
-  const { onFinish, locationConsent } = props;
+  const { onFinish, locationConsent, settings } = props;
   const [text, setText] = useState(null);
   const [progress, setProgress] = useState(null);
   const [location, setLocation] = useState({});
@@ -209,7 +209,7 @@ export default function NdtWidget(props) {
 
   useEffect(() => {
     if (!_.isEmpty(results)) {
-      onFinish(true, results, location);
+      onFinish(true, results, location, settings);
     }
   }, [results]);
 
@@ -231,4 +231,5 @@ export default function NdtWidget(props) {
 NdtWidget.propTypes = {
   onFinish: PropTypes.func.isRequired,
   locationConsent: PropTypes.bool,
+  settings: PropTypes.object,
 };

@@ -1,6 +1,6 @@
 // base imports
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation, Redirect } from 'react-router-dom';
 import { css } from 'glamor';
 import parse from 'html-react-parser';
 import PropTypes from 'prop-types';
@@ -19,7 +19,11 @@ import Loading from './Loading.jsx';
 // import FirefoxScreengrab from '../assets/images/firefox-location.jpg';
 import defaultLogo from '../../common/assets/favicon.ico';
 
-export default function Basic({ sessionId, surveyId }) {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+export default function Basic() {
   const history = useHistory();
   /* eslint-disable no-unused-vars */
   const [favicon, setFavicon] = useState(
@@ -30,6 +34,8 @@ export default function Basic({ sessionId, surveyId }) {
   const [secondary, setSecondary] = useState(
     css({ backgroundColor: '#ccc !important', borderColor: '#ccc !important' }),
   );
+
+  const query = useQuery();
 
   // style rules
 
@@ -149,14 +155,42 @@ export default function Basic({ sessionId, surveyId }) {
       state: {
         settings: settings,
         locationConsent: locationConsent,
-        surveyId: surveyId,
-        sessionId: sessionId,
+        surveyId: query.get('surveyId'),
+        sessionId: query.get('sessionId'),
       },
     });
   };
 
   if (!settings) {
     return <Loading />;
+  } else if (query.get('redirect') === 'test') {
+    return (
+      <Redirect
+        to={{
+          pathname: '/test',
+          state: {
+            settings: settings,
+            locationConsent: locationConsent,
+            surveyId: query.get('surveyId'),
+            sessionId: query.get('sessionId'),
+          },
+        }}
+      />
+    );
+  } else if (query.get('redirect') === 'geocoder') {
+    return (
+      <Redirect
+        to={{
+          pathname: '/geocoder',
+          state: {
+            settings: settings,
+            locationConsent: locationConsent,
+            surveyId: query.get('surveyId'),
+            sessionId: query.get('sessionId'),
+          },
+        }}
+      />
+    );
   } else {
     return (
       <Container fluid="lg" className={'mt-4 mb-4'}>

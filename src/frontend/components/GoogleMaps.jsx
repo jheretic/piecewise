@@ -9,13 +9,18 @@ import toastr from 'toastr';
 // Bootstrap imports
 import Container from 'react-bootstrap/Container';
 
+// module imports
+import Loading from './Loading.jsx';
+
+const processError = errorMessage => {
+  let text = `We're sorry, your request didn't go through. Please send the message below to the support team and we'll try to fix things as soon as we can.`;
+  let debug = JSON.stringify(errorMessage);
+  return [text, debug];
+};
+
 export default function GoogleMaps(props) {
-  const {
-    settings,
-    locationConsent,
-    sessionId,
-    surveyId,
-  } = props.location.state;
+  const { locationConsent, sessionId, surveyId } = props.location.state;
+  const [settings, setSettings] = React.useState({});
   const [latitude, setLatitude] = React.useState('');
   const [longitude, setLongitude] = React.useState('');
   const [address, setAddress] = React.useState('');
@@ -23,6 +28,37 @@ export default function GoogleMaps(props) {
 
   let map, marker, infowindow, instructions;
   window.goodaddress = false;
+
+  // fetch settings from API
+  const downloadSettings = () => {
+    let status;
+    return fetch('/api/v1/settings', {
+      method: 'GET',
+    })
+      .then(response => {
+        status = response.status;
+        return response.json();
+      })
+      .then(result => {
+        if (status === 200 || status === 201) {
+          if (result.data) {
+            setSettings(result.data);
+            document.title = result.data.title;
+            return;
+          } else {
+            const error = processError(result);
+            throw new Error(`Error in response from server: ${error}`);
+          }
+        } else {
+          const error = processError(result);
+          throw new Error(`Error in response from server: ${error}`);
+        }
+      })
+      .catch(error => {
+        console.error('error:', error);
+        throw Error(error.statusText);
+      });
+  };
 
   useEffect(() => {
     map = new window.google.maps.Map(document.getElementById('map'), {
@@ -47,6 +83,8 @@ export default function GoogleMaps(props) {
     autocomplete.addListener('place_changed', function() {
       geocodeAddress(geocoder, map);
     });
+
+    downloadSettings();
   }, []);
 
   const recordMarkerLatLng = () => {
@@ -165,6 +203,8 @@ export default function GoogleMaps(props) {
           latitude: latitude,
           longitude: longitude,
           address: address,
+          surveyId: surveyId,
+          sessionId: sessionId,
         },
       });
     } else {
@@ -181,49 +221,53 @@ export default function GoogleMaps(props) {
     }
   };
 
-  return (
-    <Container className={'mt-4'}>
-      <div id="mapcontainer" className="container">
-        <div className="row">
-          <div className="col">
-            <b>Please enter your address to get started</b>
-            <form onSubmit={handleSubmit}>
-              <input
-                type=""
-                defaultValue=""
-                id="loc"
-                className="form-control"
-                name=""
-                autoComplete="false"
-                required
-              />
-              <div>&nbsp;</div>
-              <b>
-                Then check the map below to make sure the pin is over your
-                location before clicking the Submit button
-              </b>
-              <div>&nbsp;</div>
-              <input type="submit" value="Submit" />
-            </form>
+  if (!settings) {
+    return <Loading />;
+  } else {
+    return (
+      <Container className={'mt-4'}>
+        <div id="mapcontainer" className="container">
+          <div className="row">
+            <div className="col">
+              <b>Please enter your address to get started</b>
+              <form onSubmit={handleSubmit}>
+                <input
+                  type=""
+                  defaultValue=""
+                  id="loc"
+                  className="form-control"
+                  name=""
+                  autoComplete="false"
+                  required
+                />
+                <div>&nbsp;</div>
+                <b>
+                  Then check the map below to make sure the pin is over your
+                  location before clicking the Submit button
+                </b>
+                <div>&nbsp;</div>
+                <input type="submit" value="Submit" />
+              </form>
+            </div>
           </div>
+          <div>&nbsp;</div>
+          <div
+            id="map"
+            className="panel-body text-dark"
+            style={{
+              height: '500px',
+              width: '100%',
+              textAlign: 'center',
+              display: 'none',
+            }}
+          />
+          <div id="geolatitude" style={{ display: 'none' }} />
+          <div id="geolongitude" style={{ display: 'none' }} />
+          <div id="geoaddress" style={{ display: 'none' }} />
         </div>
-        <div>&nbsp;</div>
-        <div
-          id="map"
-          className="panel-body text-dark"
-          style={{
-            height: '500px',
-            width: '100%',
-            textAlign: 'center',
-            display: 'none',
-          }}
-        />
-        <div id="geolatitude" style={{ display: 'none' }} />
-        <div id="geolongitude" style={{ display: 'none' }} />
-        <div id="geoaddress" style={{ display: 'none' }} />
-      </div>
-    </Container>
-  );
+      </Container>
+    );
+  }
 }
 
 GoogleMaps.propTypes = {

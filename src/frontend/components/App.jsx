@@ -16,7 +16,6 @@ const Dashboard = lazy(() => import('./Dashboard.jsx'));
 const ThankYou = lazy(() => import('./ThankYou.jsx'));
 const Survey = lazy(() => import('./Survey.jsx'));
 const JustTest = lazy(() => import('./JustTest.jsx'));
-const Continue = lazy(() => import('./Continue.jsx'));
 
 export default function App() {
   const [role, setRole] = React.useState(null);
@@ -87,7 +86,6 @@ export default function App() {
             <Route path="/thankyou" render={props => <ThankYou {...props} />} />
             <Route path="/survey" render={props => <Survey {...props} />} />
             <Route path="/test" render={props => <JustTest {...props} />} />
-            <Route path="/continue" render={props => <Continue {...props} />} />
             <Route
               path="/geocoder"
               render={props => <GoogleMaps {...props} />}
