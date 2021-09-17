@@ -234,6 +234,7 @@ export default function GoogleMaps(props) {
                 <input
                   type=""
                   defaultValue=""
+                  placeholder="Enter your location"
                   id="loc"
                   className="form-control"
                   name=""
@@ -242,11 +243,12 @@ export default function GoogleMaps(props) {
                 />
                 <div>&nbsp;</div>
                 <b>
-                  Then check the map below to make sure the pin is over your
-                  location before clicking the Submit button
+                  Then check the map below to verify that the pin is showing
+                  your location, or drag the pin to the correct location. Then
+                  click the button to start the speed test.
                 </b>
                 <div>&nbsp;</div>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Start the speed test" />
               </form>
             </div>
           </div>
