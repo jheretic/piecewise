@@ -24,6 +24,7 @@ export default function JustTest(props) {
   const address = props.location.state.address;
   const surveyId = props.location.state.surveyId;
   const sessionId = props.location.state.sessionId;
+  const [formId, setFormId] = React.useState();
   const history = useHistory();
 
   // fetch settings from API
@@ -57,8 +58,43 @@ export default function JustTest(props) {
       });
   };
 
+  const downloadForm = () => {
+    let status;
+    return fetch('/api/v1/forms/latest', {
+      method: 'GET',
+    })
+      .then(response => {
+        status = response.status;
+        return response.json();
+      })
+      .then(data => {
+        if (status === 200 || status === 201) {
+          return data;
+        } else {
+          let error = processError(data);
+          throw new Error(`Error in response from server: ${error}`);
+        }
+      })
+      .catch(error => {
+        console.error('error:', error);
+        throw Error(error.statusText);
+      });
+  };
+
   useEffect(() => {
     downloadSettings();
+    if (!formId) {
+      downloadForm()
+        .then(res => {
+          setFormId(res.data[0].id);
+          //setForm(res.data[0].fields);
+          //setSubmitButton(document.querySelector('.btn-toolbar input'));
+          return;
+        })
+        .catch(error => {
+          console.error('error:', error);
+        });
+    }
   }, []);
 
   const onFinish = async (finished, results, location, settings) => {
@@ -66,31 +102,30 @@ export default function JustTest(props) {
     console.log('Location:', location);
     console.log('Settings:', settings);
     //const serialized = JSON.stringify(results);
-    return fetch(
-      `https://${
-        settings.qualtricsEnv
-      }.qualtrics.com/API/v3/surveys/${surveyId}/sessions/${sessionId}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-TOKEN': settings.qualtricsApiToken,
-        },
-        body: JSON.stringify({
-          advance: true,
-          embeddedData: {
-            c2sRate: `${results.c2sRate}`,
-            s2cRate: `${results.s2cRate}`,
-            MinRTT: `${results.MinRTT}`,
-            MaxRTT: `${results.MaxRTT}`,
-            latitude: `${latitude}`,
-            longitude: `${longitude}`,
-            address: `${address}`,
-            ClientIP: `${results.ClientIP}`,
-          },
-        }),
+    let data = {
+      c2sRate: results.c2sRate,
+      s2cRate: results.s2cRate,
+      MinRTT: results.MinRTT,
+      MaxRTT: results.MaxRTT,
+      ClientIP: results.ClientIP,
+      //FullResults: JSON.stringify(results),
+      fields: [
+        { label: 'surveyId', value: surveyId },
+        { label: 'sessionId', value: sessionId },
+      ],
+    };
+    if (latitude !== '' && longitude !== '' && address !== '') {
+      data['latitude'] = latitude;
+      data['longitude'] = longitude;
+      data['address'] = address;
+    }
+    return fetch(`/api/v1/forms/${formId}/submissions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    ).then(response => {
+      body: JSON.stringify({ data }),
+    }).then(response => {
       if (response.ok) {
         return history.push({
           pathname: '/thankyou',

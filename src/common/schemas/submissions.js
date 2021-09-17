@@ -31,7 +31,7 @@ const updateSchema = Joi.array()
       longitude: Joi.number(),
       address: Joi.string(),
       ClientIP: Joi.string(),
-      FullResults: Joi.string(),
+      FullResults: Joi.string().allow(''),
       fields: Joi.array()
         .required()
         .min(1),
