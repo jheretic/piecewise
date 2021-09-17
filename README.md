@@ -145,6 +145,30 @@ survey message by adding Javascript to the iframe question block in the
 $('NextButton').hide();
 ```
 
+## Deploy to Google Cloud Run
+
+In order to install to Google Cloud Run, we need a few different components:
+
+1. An Artifact Registry to store the Docker image we'll deploy (quickstart available [here](https://cloud.google.com/artifact-registry/docs/docker/quickstart))
+2. A PostgreSQL instance for the database (quickstart available [here](https://cloud.google.com/sql/docs/postgres/quickstart))
+3. A Cloud Run instance to actually run the Docker container (quickstart available [here](https://cloud.google.com/run/docs/quickstarts/prebuilt-deploy))
+
+It's important that all of these are in the same region, so make sure that you **pick the same region throughout** (multi-region deployments are beyond the scope of these instructions). Follow the steps below to deploy on Google Cloud (we won't duplicate the instructions above, but will provide guidance on which options to select; many of the directions above are using the cli interface but it can also be accomplished via the web console):
+
+1. Create an artifact registry repository for Docker, in the preferred region, using the default Google-managed encryption key. Note down the name that you select here for later.
+2. Using the `gcloud` cli, run `gcloud auth configure-docker {region}-docker.pkg.dev` where `{region}` is the region you selected. This will configure Docker on your local system to be able to push images to the artifact registry.
+3. Create a Postgres SQL instance using the instructions above. Select the same region, and under `connections` enable `Private IP` with the default network. Note down the instance ID and password you select, and note down the private `10.*` IP after the instance deploys.
+4. Build the Docker image on your local machine, tagged appropriately: `docker build . -t {region}-docker.pkg.dev/{project}/{repository}/piecewise:latest` where`{region}` is the region, `{project}` is your Google Cloud project, and `{repository}` is your artifact registry repository.
+5. Push the resulting image to your artifact registry with `docker push {region}-docker.pkg.dev/{project}/{repository}/piecewise:latest`
+6. Create a new Google Cloud Run deployment with the instructions above. Select the image you just pushed to the repository, select the same region and the default resource allocations, and under `advanced settings -> connections` add a Cloud SQL connection to the Postgres instance you created above. In `advanced settings -> variables & secrets` set at least the following environment variables:
+```
+PIECEWISE_ADMIN_PASSWORD = <whateveryouwant>
+PIECEWISE_DB_HOST = <the SQL IP you noted above>
+PIECEWISE_DB_PASSWORD = <the SQL password you noted above>
+PIECEWISE_DB_USERNAME = postgres
+NODE_ENV = production
+```
+
 ## Administration & Use
 
 Documentation on how to deploy and administer Piecewise can be found in the
