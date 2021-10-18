@@ -198,7 +198,6 @@ export default function GoogleMaps(props) {
       settings.qualtricsEnv &&
       settings.qualtricsApiToken &&
       sessionId &&
-      responseId &&
       surveyId
     ) {
       history.push({
