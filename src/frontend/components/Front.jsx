@@ -157,6 +157,7 @@ export default function Basic() {
         locationConsent: locationConsent,
         surveyId: query.get('surveyId'),
         sessionId: query.get('sessionId'),
+        responseId: query.get('responseId'),
       },
     });
   };
@@ -173,6 +174,7 @@ export default function Basic() {
             locationConsent: locationConsent,
             surveyId: query.get('surveyId'),
             sessionId: query.get('sessionId'),
+            responseId: query.get('responseId'),
           },
         }}
       />
@@ -187,6 +189,7 @@ export default function Basic() {
             locationConsent: locationConsent,
             surveyId: query.get('surveyId'),
             sessionId: query.get('sessionId'),
+            responseId: query.get('responseId'),
           },
         }}
       />

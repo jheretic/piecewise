@@ -19,7 +19,12 @@ const processError = errorMessage => {
 };
 
 export default function GoogleMaps(props) {
-  const { locationConsent, sessionId, surveyId } = props.location.state;
+  const {
+    locationConsent,
+    sessionId,
+    responseId,
+    surveyId,
+  } = props.location.state;
   const [settings, setSettings] = React.useState({});
   const [latitude, setLatitude] = React.useState('');
   const [longitude, setLongitude] = React.useState('');
@@ -193,6 +198,7 @@ export default function GoogleMaps(props) {
       settings.qualtricsEnv &&
       settings.qualtricsApiToken &&
       sessionId &&
+      responseId &&
       surveyId
     ) {
       history.push({
@@ -205,6 +211,7 @@ export default function GoogleMaps(props) {
           address: address,
           surveyId: surveyId,
           sessionId: sessionId,
+          responseId: responseId,
         },
       });
     } else {
@@ -279,6 +286,7 @@ GoogleMaps.propTypes = {
       locationConsent: PropTypes.bool.isRequired,
       surveyId: PropTypes.string.isRequired,
       sessionId: PropTypes.string.isRequired,
+      responseId: PropTypes.string.isRequired,
     }),
   }),
 };

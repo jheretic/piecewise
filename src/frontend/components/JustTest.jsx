@@ -24,6 +24,7 @@ export default function JustTest(props) {
   const address = props.location.state.address;
   const surveyId = props.location.state.surveyId;
   const sessionId = props.location.state.sessionId;
+  const responseId = props.location.state.responseId;
   const [formId, setFormId] = React.useState();
   const history = useHistory();
 
@@ -112,6 +113,7 @@ export default function JustTest(props) {
       fields: [
         { label: 'surveyId', value: surveyId },
         { label: 'sessionId', value: sessionId },
+        { label: 'responseId', value: responseId },
       ],
     };
     if (latitude !== '' && longitude !== '' && address !== '') {
@@ -189,6 +191,7 @@ JustTest.propTypes = {
       address: PropTypes.string,
       surveyId: PropTypes.string.isRequired,
       sessionId: PropTypes.string.isRequired,
+      responseId: PropTypes.string.isRequired,
     }),
   }),
 };
